@@ -1,0 +1,58 @@
+{
+    "build": {
+        "beforeDevCommand": "pnpm dev",
+        "beforeBuildCommand": "pnpm build",
+        "devPath": "http://localhost:1420",
+        "distDir": "../dist",
+        "withGlobalTauri": false
+    },
+    "package": {
+        "productName": "tauri-react",
+        "version": "0.0.1"
+    },
+    "tauri": {
+        "allowlist": {
+            "all": true,
+            "http": {
+                "scope": ["http://**", "https://**"]
+            },
+            "shell": {
+                "all": false,
+                "open": true
+            },
+            "fs": {
+                "all": true,
+                "scope": ["*", "$DOWNLOAD/*"]
+            },
+            "window": {
+                "all": true
+            }
+        },
+        "bundle": {
+            "active": true,
+            "targets": "all",
+            "identifier": "com.tauri.react",
+            "icon": [
+                "icons/32x32.png",
+                "icons/128x128.png",
+                "icons/128x128@2x.png",
+                "icons/icon.icns",
+                "icons/icon.ico"
+            ]
+        },
+        "security": {
+            "csp": null
+        },
+        "windows": [
+            {
+                "label": "custom",
+                "fullscreen": false,
+                "resizable": true,
+                "title": "tauri-react",
+                "width": 900,
+                "height": 500,
+                "decorations": false
+            }
+        ]
+    }
+}
