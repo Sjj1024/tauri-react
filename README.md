@@ -36,3 +36,9 @@ pnpm install
 ```
 pnpm develop
 ```
+
+编译打包：打包为不同平台的安装文件
+
+```
+pnpm bundle
+```
