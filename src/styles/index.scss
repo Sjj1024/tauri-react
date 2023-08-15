@@ -77,3 +77,11 @@ button:focus-visible {
         background-color: #f9f9f9;
     }
 }
+
+input {
+    &:-webkit-autofill {
+        background: transparent;
+        transition: background-color 50000s ease-in-out 0s;
+        -webkit-text-fill-color: unset;
+    }
+}
