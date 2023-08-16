@@ -42,3 +42,19 @@ pnpm develop
 ```
 pnpm bundle
 ```
+
+## 使用 Github Action 发版
+
+使用 github action 打包不同平台的安装包，然后发布新版本，并支持自动升级。操作教程：[tauri 在 github 上进行自动更新打包并发版过程，实战操作避坑](https://xiaoshen.blog.csdn.net/article/details/131963524)
+
+打 tag 命令：
+
+```
+git tag v0.0.2
+```
+
+推 tag 命令：
+
+```
+git push --tag
+```
