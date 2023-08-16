@@ -78,10 +78,8 @@ button:focus-visible {
     }
 }
 
-input {
-    &:-webkit-autofill {
-        background: transparent;
-        transition: background-color 50000s ease-in-out 0s;
-        -webkit-text-fill-color: unset;
-    }
+input:-webkit-autofill {
+    background: transparent;
+    transition: background-color 50000s ease-in-out 0s;
+    -webkit-text-fill-color: unset;
 }
