@@ -15,6 +15,10 @@
             height: 50px;
             line-height: 50px;
         }
+
+        .api-limit {
+            margin: 0 0 0 10px;
+        }
     }
 }
 
@@ -28,6 +32,24 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+
+    .user-box {
+        display: flex;
+        align-items: center;
+        .user-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+        }
+    }
+}
+
+.api-text {
+    color: white;
+    padding-left: 5px;
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
 }
 
 .titlebar-button {
@@ -49,6 +71,10 @@
     &:hover {
         background-color: #eee;
     }
+}
+
+.ant-tooltip-inner {
+    min-width: 460px !important;
 }
 
 #titlebar-close {

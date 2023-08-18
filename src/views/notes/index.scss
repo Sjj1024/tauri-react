@@ -1,0 +1,29 @@
+.note-main {
+    display: flex;
+    height: 100%;
+    .note-left {
+        flex: 1;
+        max-width: 300px;
+        display: flex;
+        padding: 1px 2px 0 2px;
+        flex-direction: column;
+        justify-content: space-between;
+        border-right: 1px solid #eee;
+
+        .note-action {
+            height: 100%;
+            .menu-header {
+                width: 100%;
+            }
+        }
+
+        .menu-footer {
+            background-color: orange;
+        }
+    }
+
+    .note-content {
+        flex: 3;
+        // background-color: skyblue;
+    }
+}
