@@ -57,7 +57,7 @@ export default function Layout() {
         <div className="header-action" data-tauri-drag-region>
           <img src={LogoImg} alt="" className="action-logo" data-tauri-drag-region />
           {/* 接口使用显示 */}
-          <Tooltip placement="right" title="每小时可发送5000个请求, 已使用：3, 剩余：5498 恢复时间：2023/8/18">
+          <Tooltip overlayClassName="api-tip" placement="right" title="每小时可发送5000个请求, 已使用：3, 剩余：5498 恢复时间：2023/8/18">
             <Progress percent={89} size={[200, 20]} className="api-limit" showInfo={false}></Progress>
           </Tooltip>
         </div>

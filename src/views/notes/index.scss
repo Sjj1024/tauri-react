@@ -53,11 +53,59 @@
             width: 100%;
             height: 35px;
             background-color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+
+            .action-tip {
+                width: 100px;
+            }
+
+            .menu-footer-action {
+                margin-right: 4px;
+                width: 30px;
+                height: 30px;
+                line-height: 34px;
+                cursor: pointer;
+                display: inline-block;
+                &:hover {
+                    background-color: #ddd;
+                }
+            }
         }
     }
 
     .note-content {
         flex: 3;
-        // background-color: skyblue;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        .content-main {
+            height: calc(100% - 34px);
+        }
+
+        .content-footer {
+            width: 100%;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            border-top: 1px solid #eee;
+            .menu-footer-action {
+                margin-right: 4px;
+                width: 30px;
+                height: 30px;
+                line-height: 34px;
+                cursor: pointer;
+                display: inline-block;
+                &:hover {
+                    background-color: #ddd;
+                }
+            }
+        }
     }
 }

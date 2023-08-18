@@ -1,5 +1,6 @@
 import Note from '@/components/note';
-import { Input } from 'antd';
+import { CodeOutlined, FormOutlined, InteractionOutlined, MenuFoldOutlined, MenuUnfoldOutlined, OneToOneOutlined, PartitionOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { Dropdown, Input, Tooltip } from 'antd';
 import "./index.scss"
 
 const { Search } = Input;
@@ -111,6 +112,25 @@ export default function Notes() {
     }
   ]
 
+  const items = [
+    {
+      key: '1',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+          新建文件
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          新建文件夹
+        </a>
+      ),
+    },
+  ];
+
   return <div className="note-main">
     <div className="note-left">
       <div className="menu-header">
@@ -121,11 +141,51 @@ export default function Notes() {
           noteList.map(item => <Note noteInfo={item} key={item.id}></Note>)
         }
       </div>
-      <div className="menu-footer">底部功能区域</div>
+      <div className="menu-footer">
+        {/* 刷新同步 */}
+        <Tooltip title="同步刷新" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <RedoOutlined className='menu-footer-action' />
+        </Tooltip>
+        {/* 新建文件或者文件夹 */}
+        <Dropdown menu={{ items }} placement="top" arrow>
+          <PlusOutlined className='menu-footer-action' />
+        </Dropdown>
+        {/* 树形结构/列表结构 */}
+        <Tooltip title="树形结构" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <PartitionOutlined className='menu-footer-action' />
+        </Tooltip>
+        <Tooltip title="列表结构" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <UnorderedListOutlined className='menu-footer-action' />
+        </Tooltip>
+        {/* 软件设置 */}
+        <Tooltip title="软件设置" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <SettingOutlined className='menu-footer-action' />
+        </Tooltip>
+      </div>
     </div>
     <div className="note-content">
-      <div>内容区域</div>
-      <div>底部功能区</div>
+      <div className='content-main'>内容区域</div>
+      <div className='content-footer'>
+        {/* 折叠侧边栏 */}
+        <Tooltip title="隐藏侧边栏" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <MenuFoldOutlined className='menu-footer-action' />
+        </Tooltip>
+        <Tooltip title="显示侧边栏" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <MenuUnfoldOutlined className='menu-footer-action' />
+        </Tooltip>
+        <Tooltip title="MarkDown模式" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <CodeOutlined className='menu-footer-action' />
+        </Tooltip>
+        <Tooltip title="富文本模式" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <FormOutlined className='menu-footer-action' />
+        </Tooltip>
+        <Tooltip title="模式切换" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <InteractionOutlined className='menu-footer-action' />
+        </Tooltip>
+        <Tooltip title="实时预览" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+          <OneToOneOutlined className='menu-footer-action' />
+        </Tooltip>
+      </div>
     </div>
   </div>
 }
