@@ -1,10 +1,14 @@
-import UserInfo from './user'
 import React from 'react'
+import UserInfo from './user'
+import Setting from './seting'
 
 class Store {
     userInfo: UserInfo
+    setting: Setting
+
     constructor() {
         this.userInfo = new UserInfo()
+        this.setting = new Setting()
     }
 }
 

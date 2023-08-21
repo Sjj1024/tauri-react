@@ -1,13 +1,16 @@
 import Note from '@/components/note';
 import { CodeOutlined, FormOutlined, MenuFoldOutlined, MenuUnfoldOutlined, OneToOneOutlined, PartitionOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Dropdown, Input, Tooltip } from 'antd';
-import { useState } from 'react';
 import "./index.scss"
+import { useStore } from '@/store';
+import { observer } from 'mobx-react-lite';
 
 
 const { Search } = Input
 
-export default function Notes() {
+function Notes() {
+
+  const { setting } = useStore()
 
   const onSearch = (value: string) => console.log(value);
 
@@ -134,10 +137,15 @@ export default function Notes() {
   ];
 
   // 控制侧边栏
-  const [sidBar, setSidBar] = useState(true)
+  // const [sidBar, setSidBar] = useState(setting.showMenu)
+  // 侧边栏控制设置
+  const setMenu = () => {
+    console.log("setMenu--", setting);
+    setting.switchMenu()
+  }
 
   return <div className="note-main">
-    <div className="note-left" style={sidBar ? { display: 'block' } : { display: 'none' }}>
+    <div className="note-left" style={setting.showMenu ? { display: 'block' } : { display: 'none' }}>
       <div className="menu-header">
         <Search placeholder="搜索内容" onSearch={onSearch} />
       </div>
@@ -172,13 +180,7 @@ export default function Notes() {
       <div className='content-main'>内容区域</div>
       <div className='content-footer'>
         {/* 折叠侧边栏 */}
-        {
-          sidBar ? <Tooltip title="隐藏侧边栏" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
-            <MenuFoldOutlined className='menu-footer-action' onClick={() => setSidBar(false)} />
-          </Tooltip> : <Tooltip title="显示侧边栏" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
-            <MenuUnfoldOutlined className='menu-footer-action' onClick={() => setSidBar(true)} />
-          </Tooltip>
-        }
+        {setting.showMenu ? <MenuFoldOutlined className='menu-footer-action' onClick={setMenu} /> : <MenuUnfoldOutlined className='menu-footer-action' onClick={setMenu} />}
         <Tooltip title="MarkDown模式" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
           <CodeOutlined className='menu-footer-action' />
         </Tooltip>
@@ -195,3 +197,6 @@ export default function Notes() {
     </div>
   </div>
 }
+
+
+export default observer(Notes)
