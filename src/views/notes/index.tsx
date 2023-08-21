@@ -1,9 +1,12 @@
-import Note from '@/components/note';
-import { CodeOutlined, FormOutlined, MenuFoldOutlined, MenuUnfoldOutlined, OneToOneOutlined, PartitionOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { CodeOutlined, ExportOutlined, FormOutlined, GithubOutlined, MenuFoldOutlined, MenuUnfoldOutlined, OneToOneOutlined, PartitionOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Dropdown, Input, Tooltip } from 'antd';
 import "./index.scss"
 import { useStore } from '@/store';
 import { observer } from 'mobx-react-lite';
+import Note from '@/components/note';
+import Wang from "@/components/wang"
+import Markdown from '@/components/md';
+import { useEffect, useRef } from 'react';
 
 
 const { Search } = Input
@@ -136,6 +139,24 @@ function Notes() {
     },
   ];
 
+  // 监听保存事件
+  const mdRef = useRef(null)
+  const wangRef = useRef(null)
+  const onKeyDown = (event: any) => {
+    console.log("keyEvent--", event);
+    if (event.ctrlKey && event.keyCode === 83) {
+      console.log('ctrKey + s 保存文档', mdRef, wangRef);
+      mdRef.current && (mdRef.current as any).saveMd()
+      wangRef.current && (wangRef.current as any).saveHtml()
+    }
+  }
+  useEffect(() => {
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown)
+    }
+  }, [])
+
   // 控制侧边栏
   // const [sidBar, setSidBar] = useState(setting.showMenu)
   // 侧边栏控制设置
@@ -176,23 +197,33 @@ function Notes() {
         </Tooltip>
       </div>
     </div>
-    <div className="note-content">
-      <div className='content-main'>内容区域</div>
+    <div className="note-content" style={{ width: setting.showMenu ? "calc(100% - 300px)" : "100%" }}>
+      <div className='content-main'>
+        {setting.editor === "wang" ? <Wang ref={wangRef} /> : <Markdown ref={mdRef} config={setting} />}
+      </div>
       <div className='content-footer'>
-        {/* 折叠侧边栏 */}
-        {setting.showMenu ? <MenuFoldOutlined className='menu-footer-action' onClick={setMenu} /> : <MenuUnfoldOutlined className='menu-footer-action' onClick={setMenu} />}
-        <Tooltip title="MarkDown模式" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
-          <CodeOutlined className='menu-footer-action' />
-        </Tooltip>
-        <Tooltip title="富文本模式" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
-          <FormOutlined className='menu-footer-action' />
-        </Tooltip>
-        {/* <Tooltip title="模式切换" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+        <div>
+          {/* 折叠侧边栏 */}
+          {setting.showMenu ? <MenuFoldOutlined className='menu-footer-action' onClick={setMenu} /> : <MenuUnfoldOutlined className='menu-footer-action' onClick={setMenu} />}
+          <Tooltip title="富文本模式" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+            <FormOutlined className='menu-footer-action' onClick={() => setting.switchEdit("wang")} />
+          </Tooltip>
+          {/* <Tooltip title="模式切换" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
           <InteractionOutlined className='menu-footer-action' />
         </Tooltip> */}
-        <Tooltip title="实时预览" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
-          <OneToOneOutlined className='menu-footer-action' />
-        </Tooltip>
+          <Tooltip title="MarkDown模式" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+            <CodeOutlined className='menu-footer-action' onClick={() => setting.switchEdit("markdown")} />
+          </Tooltip>
+          <Tooltip title="实时预览" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+            <OneToOneOutlined className='menu-footer-action' onClick={() => setting.switchEdit("preview")} />
+          </Tooltip>
+          <Tooltip title="导出文件" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
+            <ExportOutlined className='menu-footer-action' onClick={() => setting.switchEdit("preview")} />
+          </Tooltip>
+        </div>
+        <div>
+          <GithubOutlined className='menu-footer-action' />
+        </div>
       </div>
     </div>
   </div>

@@ -3,9 +3,8 @@
     height: 100%;
 
     .note-left {
-        flex: 1;
         position: relative;
-        max-width: 300px;
+        width: 300px;
         padding: 2px 0px 0 10px;
         border-right: 1px solid #eee;
         height: 100%;
@@ -34,9 +33,9 @@
             }
 
             &::-webkit-scrollbar-thumb {
-                border-radius: 3px;
-                -moz-border-radius: 3px;
-                -webkit-border-radius: 3px;
+                // border-radius: 3px;
+                // -moz-border-radius: 3px;
+                // -webkit-border-radius: 3px;
                 background-color: #c3c3c3;
             }
 
@@ -77,8 +76,7 @@
     }
 
     .note-content {
-        flex: 3;
-        width: 100%;
+        width: calc(100% - 300px);
         height: 100%;
         position: relative;
         .content-main {

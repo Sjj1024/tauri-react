@@ -4,7 +4,7 @@ import Login from './views/login'
 import LayoutBoard from './layout'
 import zhCN from 'antd/locale/zh_CN'
 import { ConfigProvider } from 'antd'
-import Publish from './views/publish'
+import Setter from './views/setter'
 import Notes from './views/notes'
 
 function App() {
@@ -19,8 +19,8 @@ function App() {
             {/* 二级路由出口 */}
             <Route path="notes" element={<Notes></Notes>}></Route>
             <Route
-              path="publish"
-              element={<Publish></Publish>}
+              path="set"
+              element={<Setter></Setter>}
             ></Route>
           </Route>
         </Routes>

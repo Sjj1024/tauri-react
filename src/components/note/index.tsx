@@ -1,5 +1,6 @@
 import "./index.scss"
 
+// 笔记列表每一项
 export default function Note({ noteInfo }) {
 
   return (

@@ -1,0 +1,57 @@
+.markdown-main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    .md-box {
+        .markdown {
+            height: 100%;
+            border: unset;
+            border-radius: unset;
+            padding: 2px 5px;
+            outline: none;
+            outline-style: none;
+            word-break: break-all;
+            word-wrap: break-word;
+            background-color: rgb(248, 248, 250);
+            &::-webkit-scrollbar {
+                width: 6px;
+                height: 6px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #c3c3c3;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: transparent;
+            }
+        }
+    }
+
+    .preview {
+        width: 500px;
+        padding: 2px 5px;
+        word-wrap: break-word;
+        width: 50%;
+        border-left: 1px solid #eee;
+        overflow: scroll;
+        &::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #c3c3c3;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+}
