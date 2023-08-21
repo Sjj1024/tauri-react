@@ -49,8 +49,9 @@
                 "fullscreen": false,
                 "resizable": true,
                 "title": "tauri-react",
-                "width": 900,
-                "height": 500,
+                "width": 1000,
+                "height": 600,
+                "center": true,
                 "decorations": false
             }
         ]
