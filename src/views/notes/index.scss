@@ -1,6 +1,13 @@
 .note-main {
     display: flex;
     height: 100%;
+    position: relative;
+
+    .note-menu {
+        position: absolute;
+        background-color: pink;
+        display: none;
+    }
 
     .note-left {
         position: relative;

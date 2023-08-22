@@ -1,4 +1,4 @@
-import { CodeOutlined, ExportOutlined, FormOutlined, GithubOutlined, InfoCircleOutlined, MenuFoldOutlined, MenuUnfoldOutlined, OneToOneOutlined, PartitionOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { CodeOutlined, ExportOutlined, FormOutlined, GithubOutlined, MenuFoldOutlined, MenuUnfoldOutlined, OneToOneOutlined, PartitionOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Dropdown, Input, message, Tooltip } from 'antd';
 import { open } from '@tauri-apps/api/shell';
 import "./index.scss"
@@ -184,20 +184,35 @@ function Notes() {
     setting.switchMenu()
   }
 
+  // 笔记本右键菜单
+  const menuRef = useRef<HTMLDivElement>(null)
+  const noteMenu = (e: MouseEvent) => {
+    e.preventDefault()
+    console.log("父组件控制：右键菜单", menuRef.current, e);
+    menuRef.current!.style.top = (e.clientY - 56) + "px"
+    menuRef.current!.style.left = (e.clientX + 8) + "px"
+    menuRef.current!.style.display = "block"
+  }
+  // 隐藏笔记本菜单
+  const hiddenMenu = () => {
+    menuRef.current!.style.display = "none"
+  }
+
+
   // 跳转到仓库主页
   const toMdhub = async () => {
     await open('https://github.com/Sjj1024/tauri-react/tree/dm-hub');
   }
 
   return (
-    <div className="note-main">
+    <div className="note-main" onClick={hiddenMenu}>
       <div className="note-left" style={setting.showMenu ? { display: 'block' } : { display: 'none' }}>
         <div className="menu-header">
           <Search placeholder="搜索内容" onSearch={onSearch} />
         </div>
         <div className="menu-list">
           {
-            noteList.map(item => <Note noteInfo={item} key={item.id}></Note>)
+            noteList.map(item => <Note noteInfo={item} activeMenu={noteMenu} key={item.id}></Note>)
           }
         </div>
         <div className="menu-footer">
@@ -247,6 +262,11 @@ function Notes() {
             <GithubOutlined className='menu-footer-action' onClick={toMdhub} />
           </div>
         </div>
+      </div>
+      {/* 笔记本右键菜单 */}
+      <div className='note-menu' ref={menuRef}>
+        <div>复制链接</div>
+        <div>删除文件</div>
       </div>
     </div>
   )

@@ -3,9 +3,14 @@ import { observer } from "mobx-react-lite";
 import "./index.scss"
 
 // 笔记列表每一项
-function Note({ noteInfo }) {
+function Note({ noteInfo, activeMenu }) {
 
   const { noteActive } = useStore()
+
+  const noteMenu = (e) => {
+    // console.log("右键菜单");
+    activeMenu(e)
+  }
 
   // 激活笔记
   const activeNote = (note) => {
@@ -13,7 +18,9 @@ function Note({ noteInfo }) {
   }
 
   return (
-    <div className={noteActive.activeNote.id === noteInfo.id ? "note-item note-active" : "note-item"} onClick={() => activeNote(noteInfo)}>
+    <div className={noteActive.activeNote.id === noteInfo.id ? "note-item note-active" : "note-item"}
+      onContextMenu={noteMenu}
+      onClick={() => activeNote(noteInfo)}>
       <div className="note-title">{noteInfo.title}</div>
       <div className="note-pre">
         <span className="pre-text">{noteInfo.pre}</span>
