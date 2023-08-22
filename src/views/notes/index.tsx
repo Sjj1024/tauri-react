@@ -265,8 +265,8 @@ function Notes() {
       </div>
       {/* 笔记本右键菜单 */}
       <div className='note-menu' ref={menuRef}>
-        <div>复制链接</div>
-        <div>删除文件</div>
+        <div className='menu-item'>复制链接</div>
+        <div className='menu-item'>删除文件</div>
       </div>
     </div>
   )

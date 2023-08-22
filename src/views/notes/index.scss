@@ -5,8 +5,17 @@
 
     .note-menu {
         position: absolute;
-        background-color: pink;
+        background-color: white;
         display: none;
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        cursor: default;
+        .menu-item {
+            padding: 5px;
+            &:hover {
+                background-color: #ccc;
+            }
+        }
     }
 
     .note-left {
