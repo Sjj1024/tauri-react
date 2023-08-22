@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { appWindow } from '@tauri-apps/api/window'
 import { useEffect } from 'react'
 import './index.scss'
@@ -22,29 +22,39 @@ export default function Layout() {
     document.querySelector("div.ant-progress-bg")!.innerHTML = "<span class='api-text'>API剩余：99.67%</span>"
   }, [])
 
+  // 退出登录
+  const navigate = useNavigate()
+  const logout = () => {
+    navigate("/", { replace: true })
+  }
+  // 跳转设置
+  const goSet = () => {
+    navigate("/set", { replace: true })
+  }
+
   const items = [
     {
       key: '1',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+        <span onClick={goSet}>
           用户设置
-        </a>
+        </span>
       ),
     },
     {
       key: '2',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+        <span onClick={logout}>
           切换账号
-        </a>
+        </span>
       ),
     },
     {
       key: '3',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+        <span onClick={logout}>
           退出登录
-        </a>
+        </span>
       ),
     },
   ];

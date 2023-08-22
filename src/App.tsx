@@ -13,15 +13,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* 布局组件 */}
-          <Route path="/" element={<LayoutBoard></LayoutBoard>}>
+          <Route path="/" element={<LayoutBoard />}>
             {/* 登陆组件 */}
-            <Route index element={<Login></Login>}></Route>
+            <Route index element={<Login />}></Route>
             {/* 二级路由出口 */}
-            <Route path="notes" element={<Notes></Notes>}></Route>
-            <Route
-              path="set"
-              element={<Setter></Setter>}
-            ></Route>
+            <Route path="notes" element={<Notes />}></Route>
+            <Route path="set" element={<Setter />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
