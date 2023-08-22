@@ -1,10 +1,19 @@
+import { useStore } from "@/store";
+import { observer } from "mobx-react-lite";
 import "./index.scss"
 
 // 笔记列表每一项
-export default function Note({ noteInfo }) {
+function Note({ noteInfo }) {
+
+  const { noteActive } = useStore()
+
+  // 激活笔记
+  const activeNote = (note) => {
+    noteActive.setActive(note)
+  }
 
   return (
-    <div className="note-item">
+    <div className={noteActive.activeNote.id === noteInfo.id ? "note-item note-active" : "note-item"} onClick={() => activeNote(noteInfo)}>
       <div className="note-title">{noteInfo.title}</div>
       <div className="note-pre">
         <span className="pre-text">{noteInfo.pre}</span>
@@ -15,3 +24,5 @@ export default function Note({ noteInfo }) {
     </div>
   )
 }
+
+export default observer(Note)

@@ -1,8 +1,10 @@
 import { useState, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
+import "./index.scss"
 
 function Wang(_, ref) {
+  // 暴露出去给父组件调用的函数
   useImperativeHandle(ref, () => ({
     saveHtml: () => {
       console.log("保存富文本内容");
@@ -44,7 +46,7 @@ function Wang(_, ref) {
 
   return (
     <>
-      <div style={{ border: '1px solid #ccc', zIndex: 100 }}>
+      <div style={{ border: '1px solid #ccc', zIndex: 100 }} className="wang-main">
         <Toolbar
           editor={editor}
           defaultConfig={toolbarConfig}
@@ -57,11 +59,8 @@ function Wang(_, ref) {
           onCreated={setEditor}
           onChange={editor => setHtml(editor.getHtml())}
           mode="default"
-          style={{ height: '500px', overflowY: 'hidden' }}
+          className='wang-edit'
         />
-      </div>
-      <div style={{ marginTop: '15px' }}>
-        {html}
       </div>
     </>
   )

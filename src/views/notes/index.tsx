@@ -143,7 +143,7 @@ function Notes() {
   const mdRef = useRef(null)
   const wangRef = useRef(null)
   const onKeyDown = (event: any) => {
-    console.log("keyEvent--", event);
+    console.log("mdRef--", mdRef);
     if (event.ctrlKey && event.keyCode === 83) {
       console.log('ctrKey + s 保存文档', mdRef, wangRef);
       mdRef.current && (mdRef.current as any).saveMd()

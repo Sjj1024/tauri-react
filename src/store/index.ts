@@ -1,14 +1,17 @@
 import React from 'react'
 import UserInfo from './user'
 import Setting from './seting'
+import NoteStore from './note'
 
 class Store {
     userInfo: UserInfo
     setting: Setting
+    noteActive: NoteStore
 
     constructor() {
         this.userInfo = new UserInfo()
         this.setting = new Setting()
+        this.noteActive = new NoteStore()
     }
 }
 
