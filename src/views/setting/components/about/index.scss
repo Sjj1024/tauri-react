@@ -1,0 +1,21 @@
+.help-box {
+    // padding: 10px;
+}
+
+.alink {
+    color: var(--el-color-primary);
+}
+
+.praise {
+    display: flex;
+    justify-content: space-around;
+
+    .pay-box {
+        text-align: center;
+    }
+}
+
+.pay-code {
+    width: 200px;
+    height: 200px;
+}

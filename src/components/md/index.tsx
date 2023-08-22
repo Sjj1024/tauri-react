@@ -46,6 +46,7 @@ function Markdown(props, ref) {
     let { scrollHeight, clientHeight } = el
     el.scrollTop = (scrollHeight - clientHeight) * scale  // scrollTop的同比例滚动
     if (scrollTimer) clearTimeout(scrollTimer);
+    // 是否在滚动了
     scrollTimer = setTimeout(() => {
       scrolling = 0
       clearTimeout(scrollTimer)
@@ -62,7 +63,8 @@ function Markdown(props, ref) {
     } else if (block === 2) {
       if (scrolling === 0) scrolling = 2;
       if (scrolling === 1) return;
-      driveScroll(scale, inputRef.current as any)
+      // 同步滚动真正的textArea元素
+      driveScroll(scale, (inputRef.current! as any).resizableTextArea.textArea)
     }
   }
 

@@ -1,5 +1,6 @@
-import { CodeOutlined, ExportOutlined, FormOutlined, GithubOutlined, MenuFoldOutlined, MenuUnfoldOutlined, OneToOneOutlined, PartitionOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { CodeOutlined, ExportOutlined, FormOutlined, GithubOutlined, InfoCircleOutlined, MenuFoldOutlined, MenuUnfoldOutlined, OneToOneOutlined, PartitionOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Dropdown, Input, message, Tooltip } from 'antd';
+import { open } from '@tauri-apps/api/shell';
 import "./index.scss"
 import { useStore } from '@/store';
 import { observer } from 'mobx-react-lite';
@@ -183,6 +184,11 @@ function Notes() {
     setting.switchMenu()
   }
 
+  // 跳转到仓库主页
+  const toMdhub = async () => {
+    await open('https://github.com/Sjj1024/tauri-react/tree/dm-hub');
+  }
+
   return (
     <div className="note-main">
       <div className="note-left" style={setting.showMenu ? { display: 'block' } : { display: 'none' }}>
@@ -227,9 +233,6 @@ function Notes() {
             <Tooltip title="富文本模式" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
               <FormOutlined className='menu-footer-action' onClick={() => setting.switchEdit("wang")} />
             </Tooltip>
-            {/* <Tooltip title="模式切换" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
-          <InteractionOutlined className='menu-footer-action' />
-        </Tooltip> */}
             <Tooltip title="MarkDown模式" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
               <CodeOutlined className='menu-footer-action' onClick={() => setting.switchEdit("markdown")} />
             </Tooltip>
@@ -241,7 +244,7 @@ function Notes() {
             </Tooltip>
           </div>
           <div>
-            <GithubOutlined className='menu-footer-action' />
+            <GithubOutlined className='menu-footer-action' onClick={toMdhub} />
           </div>
         </div>
       </div>

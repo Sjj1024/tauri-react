@@ -5,6 +5,8 @@ import type { TabsProps } from 'antd';
 import Common from "./components/common";
 import Fileset from "./components/fileset";
 import Imgset from "./components/imgset";
+import User from "./components/user";
+import About from "./components/about";
 import { useNavigate } from "react-router-dom";
 
 const onChange = (key: string) => {
@@ -26,6 +28,16 @@ const items: TabsProps['items'] = [
     key: '3',
     label: `文件设置`,
     children: <Fileset />,
+  },
+  {
+    key: '4',
+    label: `用户设置`,
+    children: <User />,
+  },
+  {
+    key: '5',
+    label: `关于Dmhub`,
+    children: <About />,
   },
 ];
 
