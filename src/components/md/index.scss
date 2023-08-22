@@ -31,12 +31,11 @@
     }
 
     .preview {
-        width: 500px;
-        padding: 2px 5px;
         word-wrap: break-word;
         width: 50%;
         border-left: 1px solid #eee;
-        overflow: scroll;
+        overflow-y: scroll;
+        padding: 0 1px;
         &::-webkit-scrollbar {
             width: 6px;
             height: 6px;

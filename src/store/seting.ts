@@ -18,6 +18,9 @@ class Setting {
     switchEdit(edit: string) {
         console.log('切换编辑器模式', edit)
         this.editor = edit
+        if (edit === 'preview') {
+            this.showMenu = false
+        }
     }
 }
 

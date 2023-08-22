@@ -4,7 +4,7 @@ import Login from './views/login'
 import LayoutBoard from './layout'
 import zhCN from 'antd/locale/zh_CN'
 import { ConfigProvider } from 'antd'
-import Setter from './views/setter'
+import Setter from './views/setting'
 import Notes from './views/notes'
 
 function App() {
