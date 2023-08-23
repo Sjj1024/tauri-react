@@ -47,6 +47,7 @@ function Login() {
         console.log("可以注册");
         if (values.username && values.password && values.token) {
           const res = await loginApi.getUserInfo(`${values.token}`)
+          localStorage.setItem("token", values.token)
           if (res.status === 200) {
             console.log("可以获取到用户信息", res);
             const { name, login, avatar_url } = res.data as any
@@ -107,6 +108,7 @@ function Login() {
             console.log("用户名密码正确:");
             const res = await loginApi.getUserInfo(rsaContent.token)
             if (res.status === 200) {
+              localStorage.setItem("token", rsaContent.token)
               console.log("可以获取到用户信息", res);
               const { name, login, avatar_url } = res.data as any
               userInfo.setUserInfo({

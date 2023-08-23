@@ -9,6 +9,7 @@ import Wang from "@/components/wang"
 import Markdown from '@/components/md';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import loginApi from '@/apis/user'
 
 
 const { Search } = Input
@@ -198,6 +199,12 @@ function Notes() {
     menuRef.current!.style.display = "none"
   }
 
+  // 同步刷新
+  const refresh = async () => {
+    const loginRes = await loginApi.loginUserName("1024")
+    console.log("refresh------", loginRes);
+  }
+
 
   // 跳转到仓库主页
   const toMdhub = async () => {
@@ -218,7 +225,7 @@ function Notes() {
         <div className="menu-footer">
           {/* 刷新同步 */}
           <Tooltip title="同步刷新" color="white" overlayClassName="action-tip" overlayInnerStyle={{ color: "black" }}>
-            <RedoOutlined className='menu-footer-action' />
+            <RedoOutlined className='menu-footer-action' onClick={refresh} />
           </Tooltip>
           {/* 新建文件或者文件夹 */}
           <Dropdown menu={{ items }} placement="top" arrow>

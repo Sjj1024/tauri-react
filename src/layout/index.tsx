@@ -5,12 +5,22 @@ import './index.scss'
 // import LogoImg from '@/assets/images/logo.png'
 import { CloseOutlined, ExpandOutlined, MinusOutlined } from '@ant-design/icons'
 import { Dropdown, Progress, Tooltip } from 'antd'
+import { useStore } from '@/store'
+import { timestampToTime } from '@/utils'
+import { autorun } from 'mobx';
 
 export default function Layout() {
 
   // 路由的hooks
   const navigate = useNavigate()
   const location = useLocation()
+  const { userInfo } = useStore()
+
+  // 修改api接口速率
+  autorun(() => {
+    // 监听 username 的变化
+    console.log('userInfo.apiLimit:-------', userInfo.apiLimit);
+  });
 
   useEffect(() => {
     // 窗口控制功能
@@ -81,7 +91,8 @@ export default function Layout() {
           <img src="https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/dochub-b.2tlycxl6mhu0.webp" alt="" className="action-logo" data-tauri-drag-region />
           {/* 接口使用显示 */}
           {location.pathname === "/" ? null :
-            <Tooltip overlayClassName="api-tip" placement="right" title="每小时可发送5000个请求, 已使用：3, 剩余：5498 恢复时间：2023/8/18">
+            <Tooltip overlayClassName="api-tip" placement="right"
+              title={`每小时可发送5000个请求, 已使用：${userInfo.apiLimit.used}, 剩余：${userInfo.apiLimit.remaining} 恢复时间：${timestampToTime(userInfo.apiLimit.reset)}`}>
               <Progress percent={89} size={[200, 20]} className="api-limit" showInfo={false}></Progress>
             </Tooltip>
           }
@@ -92,7 +103,7 @@ export default function Layout() {
           <div className='user-box'>
             {location.pathname === "/" ? null :
               <Dropdown menu={{ items }} placement="bottom" arrow>
-                <img src="https://avatars.githubusercontent.com/u/48399687?v=4" alt="" className='user-icon' />
+                <img src={userInfo.avatarUrl} alt="" className='user-icon' />
               </Dropdown>
             }
           </div>

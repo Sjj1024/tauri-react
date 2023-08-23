@@ -1,8 +1,11 @@
+import { rootStore } from '@/store'
 import { HttpVerb, fetch } from '@tauri-apps/api/http'
 import { Body } from '@tauri-apps/api/http'
 
 const server = 'https://api.github.com'
 const baseURL = `${server}`
+// 导入或创建你的 MobX store 对象
+const { userInfo } = rootStore
 
 const BODY_TYPE = {
     Form: 'Form',
@@ -37,7 +40,7 @@ export const getApiLimit = () => {
     let payload = {
         method: 'GET' as HttpVerb,
         headers: {
-            Authorization: '',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
             'User-Agent': 'PostmanRuntime/7.32.3',
         },
     }
@@ -45,6 +48,7 @@ export const getApiLimit = () => {
         .then(({ status, data }) => {
             if (status >= 200 && status < 500) {
                 console.log('apilimit---', data)
+                userInfo.setApiLimit((data as any).rate)
             }
         })
         .catch((err) => {
@@ -55,7 +59,7 @@ export const getApiLimit = () => {
 const http = async (url: string, options: any = {}) => {
     if (!options.headers) {
         options.headers = {
-            Authorization: '',
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
         }
     }
     options.headers['User-Agent'] = 'PostmanRuntime/7.32.3'
