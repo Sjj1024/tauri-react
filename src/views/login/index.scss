@@ -6,8 +6,23 @@
     align-items: center;
     // background-color: #154374;
 
+    .login-action {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+        margin-bottom: 10px;
+        .login-tip {
+            border-bottom: 1px solid #a0a5a8;
+            cursor: pointer;
+            text-decoration: none;
+            &:hover {
+                color: #409eff;
+            }
+        }
+    }
+
     .login-main {
-        width: 300px;
+        width: 360px;
         padding: 10px;
         background-color: #fff;
         border-radius: 10px;
@@ -32,5 +47,6 @@
 
     .login-form-button {
         width: 100%;
+        font-weight: 700;
     }
 }
