@@ -2,8 +2,8 @@ import requests from '@/utils/request'
 
 export default {
     searchShare(
-        keyWord: string = 'FileHub',
-        lable: string = '+label:share',
+        keyWord: string = 'DOC',
+        lable: string = '+label:documentation',
         state: string = '+state:closed',
         author: string = '',
         pageSize: number = 35,
@@ -13,7 +13,7 @@ export default {
         return requests(
             `/search/issues?q=${
                 keyWord + lable + state + author
-            }+in:title+repo:Sjj1024/DataHub&per_page=${pageSize}&page=${pageNum}`,
+            }+in:title+repo:Sjj1024/doc-data&per_page=${pageSize}&page=${pageNum}`,
             {
                 method: 'get',
             }
