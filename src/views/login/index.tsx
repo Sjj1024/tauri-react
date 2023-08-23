@@ -4,56 +4,136 @@ import { useNavigate } from 'react-router-dom'
 import './index.scss'
 import loginApi from '@/apis/user'
 import { useState } from 'react'
+import { useStore } from '@/store'
+import { rsaDecode, rsaEncode } from '@/utils/encode'
 
 function Login() {
   const navigate = useNavigate()
+  const { userInfo } = useStore()
   const [messageApi, contextHolder] = message.useMessage()
 
   const [loading, setLoading] = useState(false)
 
+  const firstRegistInit = async (token: string) => {
+    // frok仓库FileHub，然后登陆
+    const payload = {
+      "name": "Dochub",
+      "include_all_branches": false
+    }
+    // 使用Filehub作为模板创建一个新仓库
+    const frokRes = await loginApi.creatDocHub(token, payload)
+    if (frokRes.status === 201) {
+      console.log("Creat DocHub 成功");
+    } else {
+      console.log("Creat DocHub 出错", frokRes);
+    }
+  }
+
   // 登陆或者注册逻辑
   const onFinish = async (values: any) => {
     console.log('注册登陆行为:', values)
+    localStorage.setItem("username", values.username)
+    localStorage.setItem("password", values.password)
     setLoading(true)
     // 注册行为
     if (regist) {
+      message.info("第一次注册时间比较长，请耐心等待...")
       console.log("注册：");
       // 判断用户名是否重复
       const loginRes = await loginApi.loginUserName(values.username)
       console.log("获取用户名结果", loginRes);
-
+      if (loginRes.status === 404) {
+        // 说明没有重复可以注册
+        console.log("可以注册");
+        if (values.username && values.password && values.token) {
+          const res = await loginApi.getUserInfo(`${values.token}`)
+          if (res.status === 200) {
+            console.log("可以获取到用户信息", res);
+            const { name, login, avatar_url } = res.data as any
+            userInfo.setUserInfo({
+              userName: name,
+              loginName: login,
+              avatarUrl: avatar_url
+            })
+            // 初始化一个存储文档的仓库
+            firstRegistInit(values.token)
+            // 文件名直接使用用户名，文件内容：用户名+密码+token加密
+            const encodeUser = rsaEncode(JSON.stringify(values))
+            const user = {
+              "body": encodeUser,
+              "title": `[dochub]userName:${values.username}`
+            }
+            const registRes = await loginApi.registUser(values.token, user)
+            if (registRes.status === 201) {
+              // 说明注册成功
+              const timer = setInterval(() => {
+                loginApi.checkReady(`/repos/${login}/Dochub/contents/README.md`).then(checkRes => {
+                  // console.log("checkReady----", checkRes);
+                  if (checkRes.status === 200) {
+                    clearInterval(timer)
+                    navigate('/notes', { replace: true })
+                    setRegist(false)
+                    message.success("欢迎使用Dochub")
+                  } else {
+                    console.log("还在检查中:", checkRes);
+                  }
+                })
+              }, 1500)
+            } else {
+              console.log("注册失败:", registRes);
+            }
+          } else {
+            console.log("token无效:", res);
+            message.error("Token无效，请更换正确的Token")
+            setLoading(false)
+            return
+          }
+        }
+      } else {
+        message.error("用户名重复，请更换用户名")
+        setLoading(false)
+        return
+      }
     } else {
       console.log("登陆：");
-
+      if (values.username && values.password) {
+        console.log("登陆接口");
+        const loginRes = await loginApi.loginUserName(values.username)
+        if (loginRes.status === 200) {
+          const rsaContent = JSON.parse(rsaDecode(atob((loginRes.data as any).content)))
+          // // console.log("rsaDecode----", rsaContent, loginForm);
+          if (rsaContent.username === values.username && rsaContent.password === values.password) {
+            // console.log("用户名密码正确", rsaContent);
+            console.log("用户名密码正确:");
+            const res = await loginApi.getUserInfo(rsaContent.token)
+            if (res.status === 200) {
+              console.log("可以获取到用户信息", res);
+              const { name, login, avatar_url } = res.data as any
+              userInfo.setUserInfo({
+                userName: name,
+                loginName: login,
+                avatarUrl: avatar_url
+              })
+              navigate('/notes', { replace: true })
+              setRegist(false)
+            } else {
+              console.log("token失效");
+            }
+          } else {
+            console.log("用户名密码不正确");
+            message.error("用户名密码不正确")
+          }
+        } else {
+          console.log("没有找到该用户");
+          message.error("没有找到该用户")
+        }
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: '请将输入框填写完整',
+        })
+      }
     }
-    if (values.username && values.password) {
-      // 使用github token获取用户信息
-      // const res = await commonApi.getUserInfo(values.token)
-      // console.log('获取用户信息', res)
-      // if (res && (res as any).name) {
-      //     messageApi.open({
-      //         type: 'success',
-      //         content: '校验成功',
-      //     })
-      //     // 将Token存储到本地
-      //     localStorage.setItem('token', values.token)
-      //     userInfo.setUserInfo({
-      //         userName: (res as any).name,
-      //         loginName: (res as any).login,
-      //         avatarUrl: (res as any).avatar_url,
-      //     })
-      //     navigate('/', { replace: true })
-      //     setLoading(false)
-      // }
-      // navigate('/notes', { replace: true })
-      console.log("登陆接口");
-    } else {
-      messageApi.open({
-        type: 'error',
-        content: '请将输入框填写完整',
-      })
-    }
-    // navigate('/', { replace: true })
   }
 
   // 忘记密码了
@@ -75,25 +155,23 @@ function Login() {
         >
           <Form.Item
             name="username"
+            initialValue={localStorage.getItem("username") || ""}
             rules={[{ required: true, message: '请输入用户名' }]}
             className="username"
           >
             <Input
-              prefix={
-                <UserOutlined className="site-form-item-icon" />
-              }
+              prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="用户名"
               size="large"
             />
           </Form.Item>
           <Form.Item
             name="password"
+            initialValue={localStorage.getItem("password") || ""}
             rules={[{ required: true, message: '请输入密码' }]}
           >
             <Input
-              prefix={
-                <LockOutlined className="site-form-item-icon" />
-              }
+              prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="密码"
               size="large"

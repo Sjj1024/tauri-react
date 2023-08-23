@@ -18,6 +18,7 @@
         "@wangeditor/editor": "^5.1.23",
         "@wangeditor/editor-for-react": "^1.0.6",
         "antd": "^5.8.2",
+        "jsencrypt": "^3.3.2",
         "github-markdown-css": "^5.2.0",
         "markdown-it": "^13.0.1",
         "mobx": "^6.10.0",

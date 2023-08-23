@@ -1,6 +1,5 @@
 import http from '@/utils/request'
 
-
 export default {
     getFiles() {
         return []
@@ -20,7 +19,7 @@ export default {
     },
     loginUserName(userName: String) {
         return http(
-            `repos/Sjj1024/DataHub/contents/FileData/users/${userName}.txt`,
+            `repos/Sjj1024/DataHub/contents/DocData/users/${userName}.txt`,
             {
                 method: 'get',
             }
@@ -35,14 +34,14 @@ export default {
             body,
         })
     },
-    updateUser(token: string, body: any){
-      return http(`/repos/Sjj1024/DataHub/issues`, {
-        method: 'put',
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        body,
-    })
+    updateUser(token: string, body: any) {
+        return http(`/repos/Sjj1024/DataHub/issues`, {
+            method: 'put',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body,
+        })
     },
     frokFileHub(token: string, body: any) {
         return http(`/repos/Sjj1024/FileHub/forks`, {
@@ -53,8 +52,8 @@ export default {
             body,
         })
     },
-    creatFileHub(token: string, body: any) {
-        return http(`/repos/Sjj1024/FileHub/generate`, {
+    creatDocHub(token: string, body: any) {
+        return http(`/repos/Sjj1024/doc-data/generate`, {
             method: 'post',
             headers: {
                 Authorization: `Bearer ${token}`,

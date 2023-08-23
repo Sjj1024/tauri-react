@@ -38,6 +38,7 @@ export const getApiLimit = () => {
         method: 'GET' as HttpVerb,
         headers: {
             Authorization: '',
+            'User-Agent': 'PostmanRuntime/7.32.3',
         },
     }
     fetch('https://api.github.com/rate_limit', payload)
@@ -52,17 +53,22 @@ export const getApiLimit = () => {
 }
 
 const http = async (url: string, options: any = {}) => {
-    if (!options.headers)
+    if (!options.headers) {
         options.headers = {
             Authorization: '',
         }
+    }
+    options.headers['User-Agent'] = 'PostmanRuntime/7.32.3'
     if (options?.body) {
         options.body = Body.json(options.body)
         if (options.body.type === BODY_TYPE.Form) {
             options.headers['Content-Type'] = 'multipart/form-data'
         }
     }
-    options = { ...commonOptions, ...options }
+    options = {
+        ...commonOptions,
+        ...options,
+    }
     console.log('request-------', buildFullPath(baseURL, url), options)
     return fetch(buildFullPath(baseURL, url), options)
         .then(({ status, data }) => {
