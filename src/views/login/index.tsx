@@ -51,9 +51,9 @@ function Login() {
     <div className="login-box" data-tauri-drag-region>
       {contextHolder}
       <div className="login-main">
-        <div className="avatar_box">
-          {/* <img src={logo} alt="" className="login-logo" /> */}
-        </div>
+        {/* <div className="avatar_box">
+          <img src={logo} alt="" className="login-logo" />
+        </div> */}
         <Form
           name="normal_login"
           className="login-form"
