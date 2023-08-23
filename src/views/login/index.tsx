@@ -1,8 +1,8 @@
-import { Form, Input, Button, message, Spin } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import { UserOutlined, LockOutlined, VerifiedOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import './index.scss'
-// import logo from '@/assets/images/logo.jpg'
+import loginApi from '@/apis/user'
 import { useState } from 'react'
 
 function Login() {
@@ -11,9 +11,21 @@ function Login() {
 
   const [loading, setLoading] = useState(false)
 
+  // 登陆或者注册逻辑
   const onFinish = async (values: any) => {
-    console.log('Success:', values)
+    console.log('注册登陆行为:', values)
     setLoading(true)
+    // 注册行为
+    if (regist) {
+      console.log("注册：");
+      // 判断用户名是否重复
+      const loginRes = await loginApi.loginUserName(values.username)
+      console.log("获取用户名结果", loginRes);
+
+    } else {
+      console.log("登陆：");
+
+    }
     if (values.username && values.password) {
       // 使用github token获取用户信息
       // const res = await commonApi.getUserInfo(values.token)
@@ -33,8 +45,8 @@ function Login() {
       //     navigate('/', { replace: true })
       //     setLoading(false)
       // }
-      navigate('/notes', { replace: true })
-      setLoading(false)
+      // navigate('/notes', { replace: true })
+      console.log("登陆接口");
     } else {
       messageApi.open({
         type: 'error',
@@ -44,6 +56,11 @@ function Login() {
     // navigate('/', { replace: true })
   }
 
+  // 忘记密码了
+  const forget = () => {
+    message.warning("忘记密码请联系微信或者QQ：648133599")
+  }
+
   // 控制登陆还是注册
   const [regist, setRegist] = useState(false)
 
@@ -51,9 +68,6 @@ function Login() {
     <div className="login-box" data-tauri-drag-region>
       {contextHolder}
       <div className="login-main">
-        {/* <div className="avatar_box">
-          <img src={logo} alt="" className="login-logo" />
-        </div> */}
         <Form
           name="normal_login"
           className="login-form"
@@ -102,7 +116,7 @@ function Login() {
             </Form.Item> : null
           }
           <div className='login-action'>
-            <span className='login-tip'>忘记密码了？</span>
+            <span className='login-tip' onClick={forget}>忘记密码了？</span>
             {
               regist ?
                 (<>
@@ -114,18 +128,15 @@ function Login() {
             }
           </div>
           <Form.Item>
-            {loading ? (
-              <Spin className="login-form-button" />
-            ) : (
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-                size="large"
-              >
-                {regist ? "注册" : "登陆"}
-              </Button>
-            )}
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+              size="large"
+              loading={loading}
+            >
+              {regist ? "注册" : "登陆"}
+            </Button>
           </Form.Item>
         </Form>
       </div>

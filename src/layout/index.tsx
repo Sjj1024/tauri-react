@@ -31,8 +31,6 @@ export default function Layout() {
     if (location.pathname !== "/") {
       document.querySelector("div.ant-progress-bg")!.innerHTML = "<span class='api-text'>API剩余：99.67%</span>"
     }
-    // 查看当前路由
-    console.log("当前路由", location.pathname);
   }, [location])
 
 
@@ -41,6 +39,7 @@ export default function Layout() {
   const logout = () => {
     navigate("/", { replace: true })
   }
+
   // 跳转设置
   const goSet = () => {
     navigate("/set", { replace: true })
