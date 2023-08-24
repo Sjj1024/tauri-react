@@ -1,6 +1,6 @@
 # Tauri + React + Typescript
 
-一个使用 tauri+react+ts 开发跨平台软件的模板，支持窗口头部自定义和窗口阴影，不用再自己做适配了，拿来即用，非常 nice。而且已经封装好了 tauri 的 http 请求工具，省去很多弯路。
+一个使用 tauri+react+ts 开发的线上笔记本软件，依托 Github api 作为接口，实现创建笔记文件，创建文件夹，删除笔记，富文本编辑笔记，Markdown 编辑笔记，Markdown 实时预览，预览同步滚动，图片/视频/音乐等文件上传同步存储等功能
 
 使用到的技术栈：  
 tauri：必须要用到的  
@@ -11,11 +11,19 @@ antd：UI 页面渲染
 sass：样式编程  
 node：v16.18.0 本地开发依赖
 
-## 页面预览：登陆页和主页
+## 页面预览
 
-![](https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/image.6k66pp3p08c0.webp)
+![](https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/image.35ywvl1kmdc0.webp)
 
-![](https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/image.3la44pmc8vs0.webp)
+![](https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/image.39hqgfcwwg80.webp)
+
+![](https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/image.1zdc3yt6nylc.webp)
+
+![](https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/image.z3wf7msueeo.webp)
+
+![](https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/image.4l8136m6fp20.webp)
+
+![](https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/image.5rni30s4jws0.webp)
 
 ## 本地开发配置
 
