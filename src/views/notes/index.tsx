@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import loginApi from '@/apis/user'
 import noteApi from "@/apis/notes"
+import NewFile from '@/components/newFile';
 
 
 
@@ -40,22 +41,30 @@ function Notes() {
 
   const [noteList, setNoteList] = useState<noteType[]>([])
 
+  // 新建文件、文件夹
+  const [show, setShow] = useState(false)
+  const [newType, setType] = useState(0)
+  const newFile = () => {
+    console.log("新创建一个文件");
+    setShow(true)
+    setType(1)
+  }
+
+  const newDir = () => {
+    console.log("新创建一个文件夹");
+    setShow(true)
+    setType(2)
+  }
+
+
   const items = [
     {
       key: '1',
-      label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-          新建文件
-        </a>
-      ),
+      label: (<span onClick={newFile}>新建文件</span>),
     },
     {
       key: '2',
-      label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-          新建文件夹
-        </a>
-      ),
+      label: (<span onClick={newDir}>新建文件夹</span>),
     },
   ];
 
@@ -219,6 +228,8 @@ function Notes() {
         <div className='menu-item'>复制链接</div>
         <div className='menu-item'>删除文件</div>
       </div>
+      {/* 新建文件夹或者文件 */}
+      <NewFile newType={newType} isShow={show} setShow={setShow}></NewFile>
     </div>
   )
 }

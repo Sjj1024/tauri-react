@@ -1,0 +1,12 @@
+.content {
+    padding: 10px;
+    .form-line {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .label {
+            width: 80px;
+        }
+    }
+}
