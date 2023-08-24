@@ -1,6 +1,7 @@
 import { useStore } from "@/store";
 import { observer } from "mobx-react-lite";
 import "./index.scss"
+import Folder from "@/assets/images/folder.png"
 
 // 笔记列表每一项
 function Note({ noteInfo, activeMenu }) {
@@ -18,14 +19,14 @@ function Note({ noteInfo, activeMenu }) {
   }
 
   return (
-    <div className={noteActive.activeNote.id === noteInfo.id ? "note-item note-active" : "note-item"}
+    <div className={noteActive.activeNote.sha === noteInfo.sha ? "note-item note-active" : "note-item"}
       onContextMenu={noteMenu}
       onClick={() => activeNote(noteInfo)}>
       <div className="note-title">{noteInfo.title}</div>
       <div className="note-pre">
-        <span className="pre-text">{noteInfo.pre}</span>
+        <span className="pre-text">{noteInfo.digest}</span>
         {
-          noteInfo.preImg ? <img src={noteInfo.preImg} alt="" className="pre-img" /> : ""
+          noteInfo.img ? <img src={noteInfo.img} alt="" className="pre-img" /> : null
         }
       </div>
     </div>

@@ -19,4 +19,21 @@ export default {
             }
         )
     },
+    getNotes(
+        keyWord: string = 'DOC',
+        lable: string = '+label:documentation',
+        author: string = localStorage.getItem('loginName')!,
+        pageSize: number = 35,
+        pageNum: number = 1
+    ) {
+        // 在作者/DocHub中获取笔记列表
+        return requests(
+            `/search/issues?q=${
+                keyWord + lable
+            }+in:title+repo:${author}/Dochub&per_page=${pageSize}&page=${pageNum}`,
+            {
+                method: 'get',
+            }
+        )
+    },
 }

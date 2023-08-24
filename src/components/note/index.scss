@@ -40,8 +40,9 @@
         .pre-img {
             flex: 1;
             width: 70px;
-            height: 56px;
+            // height: 56px;
             margin-right: 4px;
+            object-fit: contain;
         }
     }
 }

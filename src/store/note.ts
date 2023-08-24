@@ -6,10 +6,18 @@ class NoteStore {
     }
 
     activeNote = JSON.parse(localStorage.getItem('activeNote') || '{}') || {
-        id: null,
-        name: '',
+        title: '',
+        type: '',
+        category: '',
+        digest: '',
+        img: '',
+        openLink: '',
+        downLike: '',
+        delete: '',
+        sha: '',
+        createTime: '',
+        updateTime: '',
     }
-
     setActive = (note) => {
         this.activeNote = note
         localStorage.setItem('activeNote', JSON.stringify(note))

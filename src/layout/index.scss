@@ -52,6 +52,8 @@
     display: inline-block;
     height: 20px;
     line-height: 20px;
+    cursor: default;
+    user-select: none;
 }
 
 .titlebar-button {
@@ -76,7 +78,7 @@
 }
 
 .api-tip {
-    min-width: 460px !important;
+    min-width: 530px !important;
 }
 
 #titlebar-close {

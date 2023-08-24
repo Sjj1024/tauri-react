@@ -2,15 +2,14 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { appWindow } from '@tauri-apps/api/window'
 import { useEffect } from 'react'
 import './index.scss'
-// import LogoImg from '@/assets/images/logo.png'
 import { CloseOutlined, ExpandOutlined, MinusOutlined } from '@ant-design/icons'
 import { Dropdown, Progress, Tooltip } from 'antd'
 import { useStore } from '@/store'
 import { timestampToTime } from '@/utils'
 import { autorun } from 'mobx';
+import { observer } from 'mobx-react-lite'
 
-export default function Layout() {
-
+function Layout() {
   // 路由的hooks
   const navigate = useNavigate()
   const location = useLocation()
@@ -39,9 +38,10 @@ export default function Layout() {
   useEffect(() => {
     // API限制进度
     if (location.pathname !== "/") {
-      document.querySelector("div.ant-progress-bg")!.innerHTML = "<span class='api-text'>API剩余：99.67%</span>"
+      document.querySelector("div.ant-progress-bg")!.innerHTML =
+        `<span class='api-text'>API剩余：${userInfo.apiRemain}%</span>`
     }
-  }, [location])
+  }, [location, userInfo.apiRemain])
 
 
 
@@ -93,7 +93,7 @@ export default function Layout() {
           {location.pathname === "/" ? null :
             <Tooltip overlayClassName="api-tip" placement="right"
               title={`每小时可发送5000个请求, 已使用：${userInfo.apiLimit.used}, 剩余：${userInfo.apiLimit.remaining} 恢复时间：${timestampToTime(userInfo.apiLimit.reset)}`}>
-              <Progress percent={89} size={[200, 20]} className="api-limit" showInfo={false}></Progress>
+              <Progress percent={userInfo.apiRemain} size={[200, 20]} className="api-limit" showInfo={false}></Progress>
             </Tooltip>
           }
         </div>
@@ -126,3 +126,5 @@ export default function Layout() {
     </>
   )
 }
+
+export default observer(Layout)

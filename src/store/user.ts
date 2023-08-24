@@ -17,6 +17,12 @@ class UserInfo {
         makeAutoObservable(this)
     }
 
+    // 计算属性获取api的剩余
+    get apiRemain() {
+        console.log('计算属性')
+        return (this.apiLimit.remaining / this.apiLimit.limit) * 100
+    }
+
     setUserInfo = (info: any) => {
         this.userName = info.userName
         this.loginName = info.loginName

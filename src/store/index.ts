@@ -19,4 +19,4 @@ class Store {
 export const rootStore = new Store()
 const context = React.createContext(rootStore)
 export const useStore = () => React.useContext(context)
-export default () => React.useContext(context)
+export default useStore
