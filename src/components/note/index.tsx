@@ -19,7 +19,7 @@ function Note({ noteInfo, activeMenu }) {
   }
 
   return (
-    <div className={noteActive.activeNote.sha === noteInfo.sha ? "note-item note-active" : "note-item"}
+    <div className={noteActive.activeNote.title === noteInfo.title ? "note-item note-active" : "note-item"}
       onContextMenu={noteMenu}
       onClick={() => activeNote(noteInfo)}>
       <div className="note-title">{noteInfo.title}</div>
