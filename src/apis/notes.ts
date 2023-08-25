@@ -22,7 +22,6 @@ export default {
     getNotes(
         keyWord: string = 'DOC',
         lable: string = '+label:documentation',
-        author: string = localStorage.getItem('loginName')!,
         pageSize: number = 35,
         pageNum: number = 1
     ) {
@@ -30,9 +29,31 @@ export default {
         return requests(
             `/search/issues?q=${
                 keyWord + lable
-            }+in:title+repo:${author}/Dochub&per_page=${pageSize}&page=${pageNum}`,
+            }+in:title+repo:${localStorage.getItem(
+                'loginName'
+            )!}/Dochub&per_page=${pageSize}&page=${pageNum}`,
             {
                 method: 'get',
+            }
+        )
+    },
+    uploadFile(filePath: string, body: any) {
+        return requests(
+            `/repos/${localStorage.getItem(
+                'loginName'
+            )}/Dochub/contents/root/${filePath}`,
+            {
+                method: 'put',
+                body: body,
+            }
+        )
+    },
+    creatIssue(body: any) {
+        return requests(
+            `/repos/${localStorage.getItem('loginName')}/DocHub/issues`,
+            {
+                method: 'post',
+                body: body,
             }
         )
     },

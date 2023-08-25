@@ -172,7 +172,7 @@ function Notes() {
         </div>
         <div className="menu-list">
           {
-            noteList.map(item => <Note noteInfo={item} activeMenu={noteMenu} key={item.sha} />)
+            noteList.map(item => <Note noteInfo={item} activeMenu={noteMenu} key={item.title} />)
           }
         </div>
         <div className="menu-footer">
@@ -229,7 +229,7 @@ function Notes() {
         <div className='menu-item'>删除文件</div>
       </div>
       {/* 新建文件夹或者文件 */}
-      <NewFile newType={newType} isShow={show} setShow={setShow}></NewFile>
+      <NewFile newType={newType} isShow={show} setShow={setShow} callBack={getNotes}></NewFile>
     </div>
   )
 }
