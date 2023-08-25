@@ -23,6 +23,8 @@ interface noteType {
   category: string
   digest: string
   img: string
+  path: string
+  issueNum: string
   openLink: string
   downLike: string
   delete: string
@@ -33,7 +35,7 @@ interface noteType {
 
 function Notes() {
 
-  const { setting } = useStore()
+  const { setting, userInfo } = useStore()
 
   const navigate = useNavigate()
 
@@ -56,6 +58,27 @@ function Notes() {
     setType(2)
   }
 
+  // 删除文件
+  const delNote = () => {
+    console.log("删除文件", menuFile)
+    // 真删文件
+    // noteApi.delFile(menuFile!.path, {
+    //   "message": "delete from FileHub",
+    //   "sha": menuFile!.sha
+    // }).then(delRes => {
+    //   console.log("删除成功", delRes);
+    // })
+    // 逻辑删除
+    menuFile!.delete = "true"
+    noteApi.updateNote(menuFile!.issueNum, {
+      title: `DEL::${menuFile?.title}`,
+      labels: ['delete'],
+      body: JSON.stringify(menuFile)
+    }).then(delRes => {
+      console.log("删除笔记结果:", delRes);
+      getNotes()
+    })
+  }
 
   const items = [
     {
@@ -92,19 +115,12 @@ function Notes() {
     const noteRes = await noteApi.getNotes()
     console.log("获取笔记列表", noteRes);
     if (noteRes.status === 200) {
-      const issueNotes = (noteRes.data as any).items.map(
-        // {
-        //   id: 1,
-        //   title: "第一篇内容第一篇内容第一篇内容第一篇内容第一篇内容",
-        //   pre: "预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容",
-        //   sha: "唯一sha",
-        //   preImg: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-        //   openLink: "https://ant.design/components/image-cn",
-        //   shareLink: "https://ant.design/components/image-cn",
-        //   show: true
-        // }
-        item => JSON.parse(item.body)
-      )
+      const issueNotes = (noteRes.data as any).items.reduce((pre, cur) => {
+        const note = JSON.parse(cur.body)
+        note["issueNum"] = cur.number
+        note.delete === "false" ? pre.push(note) : null
+        return pre
+      }, [])
       console.log("issueNotes--", issueNotes);
       setNoteList(issueNotes)
     } else {
@@ -140,9 +156,11 @@ function Notes() {
 
   // 笔记本右键菜单
   const menuRef = useRef<HTMLDivElement>(null)
-  const noteMenu = (e: MouseEvent) => {
+  const [menuFile, setMenuFile] = useState<noteType | null>()
+  const noteMenu = (e: MouseEvent, noteInfo) => {
     e.preventDefault()
-    console.log("父组件控制：右键菜单", menuRef.current, e);
+    setMenuFile(noteInfo)
+    console.log("父组件控制：右键菜单", noteInfo);
     menuRef.current!.style.top = (e.clientY - 56) + "px"
     menuRef.current!.style.left = (e.clientX + 8) + "px"
     menuRef.current!.style.display = "block"
@@ -226,7 +244,7 @@ function Notes() {
       {/* 笔记本右键菜单 */}
       <div className='note-menu' ref={menuRef}>
         <div className='menu-item'>复制链接</div>
-        <div className='menu-item'>删除文件</div>
+        <div className='menu-item' onClick={delNote}>删除文件</div>
       </div>
       {/* 新建文件夹或者文件 */}
       <NewFile newType={newType} isShow={show} setShow={setShow} callBack={getNotes}></NewFile>

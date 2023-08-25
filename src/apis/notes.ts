@@ -57,4 +57,26 @@ export default {
             }
         )
     },
+    delFile(filePath: string, body: any) {
+        return requests(
+            `/repos/${localStorage.getItem(
+                'loginName'
+            )}/DocHub/contents/${filePath}`,
+            {
+                method: 'DELETE',
+                body: body,
+            }
+        )
+    },
+    updateNote(issue_number: string, body: any) {
+        return requests(
+            `/repos/${localStorage.getItem(
+                'loginName'
+            )}/DocHub/issues/${issue_number}`,
+            {
+                method: 'PATCH',
+                body: body,
+            }
+        )
+    },
 }

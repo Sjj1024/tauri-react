@@ -46,7 +46,7 @@ export default function NewFile({ isShow, setShow, newType, callBack }) {
       noteApi.creatIssue(fileInfo).then(issRes => {
         console.log("issue创建成功:", issRes);
         // 刷新笔记列表
-        callBack()
+        setTimeout(() => callBack(), 1000)
       })
     })
     // 再创建issue
