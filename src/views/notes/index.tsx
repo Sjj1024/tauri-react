@@ -35,7 +35,7 @@ interface noteType {
 
 function Notes() {
 
-  const { setting, userInfo } = useStore()
+  const { setting } = useStore()
 
   const navigate = useNavigate()
 
