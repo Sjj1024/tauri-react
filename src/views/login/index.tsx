@@ -102,7 +102,7 @@ function Login() {
         const loginRes = await loginApi.loginUserName(values.username)
         if (loginRes.status === 200) {
           const rsaContent = JSON.parse(rsaDecode(atob((loginRes.data as any).content)))
-          // // console.log("rsaDecode----", rsaContent, loginForm);
+          console.log("rsaDecode----", rsaContent);
           if (rsaContent.username === values.username && rsaContent.password === values.password) {
             // console.log("用户名密码正确", rsaContent);
             console.log("用户名密码正确:");

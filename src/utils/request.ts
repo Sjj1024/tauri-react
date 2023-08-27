@@ -40,7 +40,7 @@ export const getApiLimit = () => {
     let payload = {
         method: 'GET' as HttpVerb,
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+            Authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : "",
             'User-Agent': 'PostmanRuntime/7.32.3',
         },
     }
@@ -59,7 +59,7 @@ export const getApiLimit = () => {
 const http = async (url: string, options: any = {}) => {
     if (!options.headers) {
         options.headers = {
-            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+            Authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : "",
         }
     }
     options.headers['User-Agent'] = 'PostmanRuntime/7.32.3'

@@ -33,8 +33,10 @@ class UserInfo {
     }
 
     setApiLimit = (apiInfo: any) => {
-        this.apiLimit = apiInfo
-        localStorage.setItem('apiLimit', JSON.stringify(apiInfo))
+        if (apiInfo) {
+            this.apiLimit = apiInfo
+            localStorage.setItem('apiLimit', JSON.stringify(apiInfo))
+        }
     }
 }
 
