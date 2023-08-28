@@ -35,7 +35,7 @@ interface noteType {
 
 function Notes() {
 
-  const { setting } = useStore()
+  const { setting, noteActive } = useStore()
 
   const navigate = useNavigate()
 
@@ -57,6 +57,8 @@ function Notes() {
     setShow(true)
     setType(2)
   }
+
+  
 
   // 删除文件
   const delNote = () => {
