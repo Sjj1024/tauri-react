@@ -33,9 +33,8 @@ export default function NewFile({ isShow, setShow, newType, callBack }) {
             type: "md",
             path: path,
             category: "分类",
-            digest:
-              "摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容",
-            img: "https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/fileHub.3z5pyj461dq0.webp",
+            digest: "",
+            img: "",
             openLink: `https://cdn.staticaly.com/gh/${localStorage.getItem(
               "loginName"
             )!}/Dochub@main/${path}`,
@@ -44,6 +43,7 @@ export default function NewFile({ isShow, setShow, newType, callBack }) {
             )!}/Dochub@main/${path}`,
             delete: "false",
             sha: sha,
+            fileSha: sha,
             createTime: "2023.8.22",
             updateTime: "2023.8.23",
           }),

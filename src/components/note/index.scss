@@ -34,14 +34,15 @@
             display: -webkit-box;
             -webkit-line-clamp: 3; //显示3行
             -webkit-box-orient: vertical;
-            padding-right: 10px;
+            // padding-right: 10px;
         }
 
         .pre-img {
             flex: 1;
             width: 70px;
             // height: 56px;
-            margin-right: 4px;
+            height: 60px;
+            // margin-right: 4px;
             object-fit: contain;
         }
     }

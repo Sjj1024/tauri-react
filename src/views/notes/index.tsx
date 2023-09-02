@@ -184,8 +184,7 @@ function Notes() {
 
   // 同步刷新
   const refresh = async () => {
-    const loginRes = await loginApi.loginUserName("1024");
-    console.log("refresh------", loginRes);
+    getNotes();
   };
 
   // 跳转到仓库主页
