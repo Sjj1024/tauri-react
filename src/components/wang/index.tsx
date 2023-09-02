@@ -1,9 +1,10 @@
 import { useState, useEffect, useImperativeHandle } from "react";
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
-import { useStore } from "@/store";
+// import { useStore } from "@/store";
 import { observer } from "mobx-react-lite";
 import "./index.scss";
+import useStore from "@/store";
 
 function Wang(_, ref) {
   // 编辑器内容
