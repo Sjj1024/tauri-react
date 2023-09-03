@@ -49,7 +49,7 @@ class NoteStore {
   };
 
   updateFile = (content: string) => {
-    console.log("更新文档内容，标题，简介，预览图", content);
+    console.log("更新或新建文档内容，标题，简介，预览图", content);
     return new Promise((resolve, reject) => {
       noteApi
         .updateFile(this.activeNote.path, {

@@ -44,13 +44,18 @@ let scrollTimer;
 
 function Markdown(props, ref) {
   const { noteActive } = useStore();
+  const { refNote } = props;
 
   // 暴露出去的实例对象应该有哪些函数
   useImperativeHandle(ref, () => ({
     saveMd: () => {
       console.log("保存markdown内容", htmlString);
       localStorage.setItem("notes", htmlString);
-      noteActive.updateFile(htmlString);
+      noteActive.updateFile(htmlString).then((res) => {
+        // 刷新笔记列表
+        console.log("刷新笔记列表", res);
+        refNote();
+      });
     },
   }));
 
