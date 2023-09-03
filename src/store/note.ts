@@ -33,8 +33,16 @@ class NoteStore {
       //   const content = atob((res.data as any).content);
       console.log("文章内容是", content);
       this.activeNote = note;
+      var imgReg = /<img src="(.*?)"/;
+      var arr = content.match(imgReg) as any;
+      if (arr && arr.length > 0) {
+        console.log("匹配到的预览图是", arr[1]);
+        this.activeNote.img = arr[1];
+      }
+      const temp = content.replace(/<[^>]*>/gi, ""); //html是一个要去除html标记的文档
+      console.log("全部替换后的结果是", temp);
+      this.activeNote.digest = temp.slice(0, 100);
       this.activeNote.content = content;
-      this.activeNote.digest = content.slice(0, 100);
       this.activeNote.fileSha = (res.data as any).sha;
       localStorage.setItem("activeNote", JSON.stringify(this.activeNote));
     });
@@ -42,38 +50,42 @@ class NoteStore {
 
   updateFile = (content: string) => {
     console.log("更新文档内容，标题，简介，预览图", content);
-    noteApi
-      .updateFile(this.activeNote.path, {
-        message: "Update From Dochub",
-        content: encode64(content),
-        sha: this.activeNote.fileSha,
-      })
-      .then((res) => {
-        console.log("更新成功", res);
-        if (res.status > 300) {
-          console.log("更新失败:", res);
-          return;
-        }
-        // 更新简介和预览图：正则匹配简介和预览图
-        var imgReg = /<img src="(.*?)"/;
-        var arr = content.match(imgReg) as any;
-        if (arr && arr.length > 0) {
-          console.log("匹配到的预览图是", arr[1]);
-          this.activeNote.img = arr[1];
-        }
-        const temp = content.replace(/<[^>]*>/gi, ""); //html是一个要去除html标记的文档
-        console.log("全部替换后的结果是", temp);
-        this.activeNote.digest = temp.slice(0, 100);
-        this.activeNote.fileSha = (res.data as any).content.sha;
-        // 更新笔记issue
-        noteApi
-          .updateNote(this.activeNote.issueNum, {
-            body: JSON.stringify(this.activeNote),
-          })
-          .then((updateRes) => {
-            console.log("更新笔记结果:", updateRes);
-          });
-      });
+    return new Promise((resolve, reject) => {
+      noteApi
+        .updateFile(this.activeNote.path, {
+          message: "Update From Dochub",
+          content: encode64(content),
+          sha: this.activeNote.fileSha,
+        })
+        .then((res) => {
+          console.log("更新成功", res);
+          if (res.status > 300) {
+            console.log("更新失败:", res);
+            return;
+          }
+          // 更新简介和预览图：正则匹配简介和预览图
+          var imgReg = /<img src="(.*?)"/;
+          var arr = content.match(imgReg) as any;
+          if (arr && arr.length > 0) {
+            console.log("匹配到的预览图是", arr[1]);
+            this.activeNote.img = arr[1];
+          }
+          const temp = content.replace(/<[^>]*>/gi, ""); //html是一个要去除html标记的文档
+          console.log("全部替换后的结果是", temp);
+          this.activeNote.digest = temp.slice(0, 100);
+          this.activeNote.fileSha = (res.data as any).content.sha;
+          // 更新笔记issue
+          noteApi
+            .updateNote(this.activeNote.issueNum, {
+              body: JSON.stringify(this.activeNote),
+            })
+            .then((updateRes) => {
+              console.log("更新笔记结果:", updateRes);
+              resolve(updateRes);
+            })
+            .catch((error) => reject(error));
+        });
+    });
   };
 }
 

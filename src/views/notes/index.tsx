@@ -22,7 +22,6 @@ import Wang from "@/components/wang";
 import Markdown from "@/components/md";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import loginApi from "@/apis/user";
 import noteApi from "@/apis/notes";
 import NewFile from "@/components/newFile";
 
@@ -254,9 +253,9 @@ function Notes() {
       >
         <div className="content-main">
           {setting.editor === "wang" ? (
-            <Wang ref={wangRef} />
+            <Wang ref={wangRef} refNote={getNotes} />
           ) : (
-            <Markdown ref={mdRef} config={setting} />
+            <Markdown ref={mdRef} config={setting} refNote={getNotes} />
           )}
         </div>
         <div className="content-footer">

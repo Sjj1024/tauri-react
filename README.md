@@ -1,4 +1,4 @@
-# Tauri + React + Typescript
+# DocHub
 
 一个使用 tauri+react+ts 开发的线上笔记本软件，依托 Github api 作为接口，实现创建笔记文件，创建文件夹，删除笔记，富文本编辑笔记，Markdown 编辑笔记，Markdown 实时预览，预览同步滚动，图片/视频/音乐等文件上传同步存储等功能
 

@@ -2,11 +2,15 @@ import { Input, Modal } from "antd";
 import { useState } from "react";
 import "./index.scss";
 import noteApi from "@/apis/notes";
+import { observer } from "mobx-react-lite";
+import useStore from "@/store";
 
-export default function NewFile({ isShow, setShow, newType, callBack }) {
+function NewFile({ isShow, setShow, newType, callBack }) {
   const [fileName, setFileName] = useState("");
   const [dirName, setdirName] = useState("");
   const [dirDigest, setdirDigest] = useState("");
+
+  const { noteActive } = useStore();
 
   const handleOk = () => {
     setShow(false);
@@ -25,31 +29,36 @@ export default function NewFile({ isShow, setShow, newType, callBack }) {
       .then((upRes) => {
         console.log("上传成功", upRes);
         const { path, sha, name } = (upRes.data as any).content;
+        const tempNote = {
+          title: name,
+          type: "md",
+          path: path,
+          category: "分类",
+          digest: "",
+          img: "",
+          openLink: `https://cdn.staticaly.com/gh/${localStorage.getItem(
+            "loginName"
+          )!}/Dochub@main/${path}`,
+          downLike: `https://cdn.staticaly.com/gh/${localStorage.getItem(
+            "loginName"
+          )!}/Dochub@main/${path}`,
+          delete: "false",
+          sha: sha,
+          issueNum: "",
+          fileSha: sha,
+          createTime: "2023.8.22",
+          updateTime: "2023.8.23",
+        };
         const fileInfo = {
           title: `DOC::${name}`,
           labels: ["documentation"],
-          body: JSON.stringify({
-            title: name,
-            type: "md",
-            path: path,
-            category: "分类",
-            digest: "",
-            img: "",
-            openLink: `https://cdn.staticaly.com/gh/${localStorage.getItem(
-              "loginName"
-            )!}/Dochub@main/${path}`,
-            downLike: `https://cdn.staticaly.com/gh/${localStorage.getItem(
-              "loginName"
-            )!}/Dochub@main/${path}`,
-            delete: "false",
-            sha: sha,
-            fileSha: sha,
-            createTime: "2023.8.22",
-            updateTime: "2023.8.23",
-          }),
+          body: JSON.stringify(tempNote),
         };
         noteApi.creatIssue(fileInfo).then((issRes) => {
           console.log("issue创建成功:", issRes);
+          // 设置激活笔记
+          tempNote.issueNum = (issRes.data as any).number;
+          noteActive.setActive(tempNote);
           // 刷新笔记列表
           setTimeout(() => callBack(), 1000);
         });
@@ -119,3 +128,5 @@ export default function NewFile({ isShow, setShow, newType, callBack }) {
     </div>
   );
 }
+
+export default observer(NewFile);

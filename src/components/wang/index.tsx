@@ -6,17 +6,21 @@ import { observer } from "mobx-react-lite";
 import "./index.scss";
 import useStore from "@/store";
 
-function Wang(_, ref) {
+function Wang(props, ref) {
   // 编辑器内容
   const { noteActive } = useStore();
-
+  const { refNote } = props;
   // 暴露出去给父组件调用的函数
   useImperativeHandle(ref, () => ({
     saveHtml: () => {
       console.log("保存富文本内容");
       // localStorage.setItem("notes", html);
       // 调用接口更新文档内容
-      noteActive.updateFile(html);
+      noteActive.updateFile(html).then((res) => {
+        // 刷新笔记列表
+        console.log("刷新笔记列表", res);
+        refNote();
+      });
     },
   }));
   // editor 实例
