@@ -11,6 +11,10 @@ antd：UI 页面渲染
 sass：样式编程  
 node：v16.18.0 本地开发依赖
 
+## 基础功能
+注册登录，创建笔记，删除笔记，修改笔记，富文本编辑笔记，Markdown编辑模式，隐藏侧边栏，全屏模式等等  
+待开发功能：笔记本回收站，笔记本外链分享，笔记本加密等
+
 ## 页面预览
 
 ![](https://cdn.staticaly.com/gh/1024huijia/QingChunMeizi@master/image.35ywvl1kmdc0.webp)
